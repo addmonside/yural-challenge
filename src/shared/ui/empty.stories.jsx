@@ -1,10 +1,9 @@
 import { expect, fn, userEvent, within } from 'storybook/test'
-
 import { Button } from './button'
 import { Empty } from './empty'
 
 export default {
-  title: 'Shared/UI/Empty',
+  title: 'ui/Empty',
   component: Empty,
   tags: ['autodocs'],
   parameters: {

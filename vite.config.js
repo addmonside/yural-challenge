@@ -2,7 +2,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 import checker from 'vite-plugin-checker'
-import mkcert from 'vite-plugin-mkcert'
+// import mkcert from 'vite-plugin-mkcert'
 import createSvgSpritePlugin from 'vite-plugin-svg-sprite'
 import { defineConfig, lazyPlugins } from 'vite-plus'
 
@@ -21,6 +21,7 @@ export default defineConfig({
     printWidth: 100,
     singleQuote: true,
     semi: false,
+    singleAttributePerLine: true,
     ignorePatterns: [
       'public/**',
       'src/shared/api/generated/**',
@@ -64,7 +65,7 @@ export default defineConfig({
     checker({
       oxlint: true,
     }),
-    mkcert(),
+    // mkcert(),
     createSvgSpritePlugin({
       exportType: 'react',
       include: '**/src/shared/assets/*.svg',

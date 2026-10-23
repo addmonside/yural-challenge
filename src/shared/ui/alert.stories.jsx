@@ -1,10 +1,9 @@
 import { expect, fn, userEvent, within } from 'storybook/test'
-
 import { Alert } from './alert'
 import { Button } from './button'
 
 export default {
-  title: 'Shared/UI/Alert',
+  title: 'ui/Alert',
   component: Alert,
   tags: ['autodocs'],
   parameters: {

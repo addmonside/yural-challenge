@@ -1,10 +1,9 @@
 import { expect, within } from 'storybook/test'
-
 import { Button } from './button'
 import { PageLayout } from './page-layout'
 
 export default {
-  title: 'Shared/UI/PageLayout',
+  title: 'ui/PageLayout',
   component: PageLayout,
   tags: ['autodocs'],
   parameters: {

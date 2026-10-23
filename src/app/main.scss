@@ -13,6 +13,17 @@ p {
   margin-bottom: 0;
 }
 
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .pointer-events-none {
   pointer-events: none;
+}
+
+.list-group-item {
+  min-height: 3rem;
 }

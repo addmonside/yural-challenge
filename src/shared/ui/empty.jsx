@@ -42,7 +42,7 @@ function EmptyMedia({ as, className, variant = 'default', ...props }) {
 
   return (
     <Comp
-      data-slot="empty-icon"
+      data-slot="empty-media"
       data-variant={variant}
       className={clsx(
         styles.media,

@@ -1,6 +1,5 @@
 .root {
   min-width: 0;
-  border-style: dashed;
   text-wrap: balance;
 }
 
@@ -17,13 +16,19 @@
   }
 }
 
-.media[data-variant='icon'] {
-  width: 5rem;
-  height: 5rem;
-
+.media {
   svg:not([class*='size-']) {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  *[data-variant='icon'] {
+    width: 5rem;
+    height: 5rem;
+
+    svg:not([class*='size-']) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
 }
 

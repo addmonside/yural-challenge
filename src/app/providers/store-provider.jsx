@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { counterReducer } from '@/features/counter'
+import { partsReducer } from '@/features/parts'
 import { Provider } from 'react-redux'
 
 const store = configureStore({
-  reducer: { counter: counterReducer },
+  reducer: { parts: partsReducer },
 })
 
 export function StoreProvider({ children }) {
-  console.log({ store })
   return <Provider store={store}>{children}</Provider>
 }

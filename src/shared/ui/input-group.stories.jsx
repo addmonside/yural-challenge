@@ -1,9 +1,8 @@
 import { expect, fn, userEvent, within } from 'storybook/test'
-
 import { InputGroup } from './input-group'
 
 export default {
-  title: 'Shared/UI/InputGroup',
+  title: 'ui/InputGroup',
   component: InputGroup,
   tags: ['autodocs'],
   parameters: {
