@@ -8,7 +8,9 @@
     "build": "vp build",
     "lint": "vp lint",
     "preview": "vp preview",
-    "test": "vp test"
+    "test": "vp test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
@@ -18,23 +20,27 @@
     "react-redux": "^9.3.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-a11y": "^10.6.3",
+    "@storybook/addon-docs": "^10.6.3",
+    "@storybook/addon-vitest": "^10.6.3",
+    "@storybook/react-vite": "^10.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/browser-playwright": "latest",
+    "@vitest/coverage-v8": "latest",
     "oxlint": "1.88.0",
     "oxlint-tsgolint": "7.0.2004",
+    "playwright": "latest",
+    "prop-types": "latest",
     "sass-embedded": "^1.106.1",
+    "storybook": "^10.6.3",
     "vite": "catalog:",
     "vite-plugin-checker": "^0.14.5",
     "vite-plugin-mkcert": "^2.1.0",
     "vite-plugin-svg-sprite": "^0.7.1",
-    "vite-plus": "catalog:"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.15.0",
-      "onFail": "download"
-    }
+    "vite-plus": "catalog:",
+    "vitest": "latest"
   }
 }

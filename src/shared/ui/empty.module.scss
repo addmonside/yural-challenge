@@ -1,0 +1,52 @@
+.root {
+  min-width: 0;
+  border-style: dashed;
+  text-wrap: balance;
+}
+
+.header {
+  max-width: 24rem;
+}
+
+.media {
+  margin-bottom: 0.5rem;
+
+  svg {
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+}
+
+.media[data-variant='icon'] {
+  width: 5rem;
+  height: 5rem;
+
+  svg:not([class*='size-']) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.title {
+  letter-spacing: -0.025em;
+}
+
+.description {
+  line-height: 1.625;
+
+  a {
+    text-underline-offset: 4px;
+  }
+
+  a:hover {
+    color: var(--bs-primary);
+  }
+}
+
+.content {
+  min-width: 0;
+  max-width: 24rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-wrap: balance;
+}
