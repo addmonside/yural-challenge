@@ -57,7 +57,7 @@ export default defineConfig({
     mkcert(),
     createSvgSpritePlugin({
       exportType: 'react',
-      include: '**/icons/*.svg',
+      include: './src/shared/assets/*.svg',
     }),
   ]),
   resolve: {

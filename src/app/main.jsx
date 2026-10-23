@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './styles.scss'
-import App from './app'
+import './main.scss'
+import { App } from './app'
+import { Providers } from './providers'
 
 const themeMedia = window.matchMedia('(prefers-color-scheme: dark)')
 
@@ -14,6 +15,8 @@ themeMedia.addEventListener('change', applyTheme)
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <Providers>
+      <App />
+    </Providers>
   </StrictMode>,
 )

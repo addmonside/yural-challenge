@@ -1,7 +1,9 @@
-import { useState } from 'react'
 import heroImg from '@/shared/assets/hero.png'
 import reactLogo from '@/shared/assets/react.svg'
 import viteLogo from '@/shared/assets/vite.svg'
+import { Button } from '@/shared/ui/button'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment } from '@/features/counter'
 
 const docsLinks = [
   {
@@ -23,8 +25,9 @@ const socialLinks = [
   { href: 'https://bsky.app/profile/vite.dev', label: 'Bluesky', icon: 'bluesky-icon' },
 ]
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  const value = useSelector((state) => state.counter.value)
+  const dispatch = useDispatch()
 
   return (
     <main className="container py-5">
@@ -39,13 +42,9 @@ function App() {
           <p className="lead text-body-secondary mb-4">
             Edit <code>src/app/app.jsx</code> and save to test <code>HMR</code>
           </p>
-          <button
-            type="button"
-            className="btn btn-primary btn-lg"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            Count is <span className="badge rounded-pill text-bg-light ms-2">{count}</span>
-          </button>
+          <Button onClick={() => dispatch(increment())}>
+            Count is <span className="badge rounded-pill text-bg-light ms-2">{value}</span>
+          </Button>
         </div>
       </section>
 
@@ -111,5 +110,3 @@ function App() {
     </main>
   )
 }
-
-export default App
