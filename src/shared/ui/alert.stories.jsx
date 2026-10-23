@@ -57,7 +57,10 @@ export const WithAction = {
       <Alert.Title>Нет соединения</Alert.Title>
       <Alert.Description>Не удалось загрузить данные. Попробуйте ещё раз.</Alert.Description>
       <Alert.Action>
-        <Button variant="ghost" onClick={args.onClose}>
+        <Button
+          variant="ghost"
+          onClick={args.onClose}
+        >
           Закрыть
         </Button>
       </Alert.Action>
@@ -84,7 +87,11 @@ export const WithIcon = {
         stroke="currentColor"
         strokeWidth="2"
       >
-        <circle cx="12" cy="12" r="9" />
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+        />
         <path d="M12 8v5M12 16h.01" />
       </svg>
       <Alert.Title>Товар не найден</Alert.Title>

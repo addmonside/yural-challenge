@@ -1,11 +1,12 @@
 // oxlint-disable react/only-export-components
+import { clsx } from 'clsx'
 import InfoIcon from '@/shared/assets/info.svg'
 import { Alert } from './alert'
 
 function PageLayoutRoot({ children, className }) {
   return (
     <section
-      className={`d-flex w-100 flex-grow-1 flex-column px-3 pb-5 px-sm-5 ${className ?? ''}`}
+      className={clsx('d-flex w-100 flex-grow-1 flex-column px-3 pb-5 px-sm-5', className)}
       data-slot="page-layout"
     >
       {children}
@@ -15,7 +16,11 @@ function PageLayoutRoot({ children, className }) {
 
 function PageLayoutTitle({ children, className, ...props }) {
   return (
-    <h1 className={`py-1 fs-2 py-sm-0 ${className ?? ''}`} data-slot="page-layout-title" {...props}>
+    <h1
+      className={clsx('py-1 fs-2 py-sm-0', className)}
+      data-slot="page-layout-title"
+      {...props}
+    >
       {children}
     </h1>
   )
@@ -24,7 +29,7 @@ function PageLayoutTitle({ children, className, ...props }) {
 function PageLayoutDescription({ children, className, ...props }) {
   return (
     <p
-      className={`lead text-body-secondary ${className ?? ''}`}
+      className={clsx('lead text-body-secondary', className)}
       data-slot="page-layout-description"
       {...props}
     >
@@ -39,7 +44,10 @@ function PageLayoutHeader({ as, className, ...props }) {
   return (
     <Comp
       data-slot="page-layout-header"
-      className={`bg-body sticky-top d-flex flex-column gap-2 rounded-bottom-4 pt-5 pb-4 ${className ?? ''}`}
+      className={clsx(
+        'bg-body sticky-top d-flex flex-column gap-2 rounded-bottom-4 pt-5 pb-4',
+        className,
+      )}
       {...props}
     />
   )
@@ -51,7 +59,10 @@ function PageLayoutToolbar({ as, className, ...props }) {
   return (
     <Comp
       data-slot="page-layout-toolbar"
-      className={`bg-body-secondary d-flex w-100 flex-row align-items-center justify-content-between gap-4 gap-xl-3 rounded-4 p-3 ${className ?? ''}`}
+      className={clsx(
+        'bg-body-secondary d-flex w-100 flex-row align-items-center justify-content-between gap-4 gap-xl-3 rounded-4 p-3',
+        className,
+      )}
       {...props}
     />
   )
@@ -66,7 +77,7 @@ function PageLayoutContent({ as, variant = 'clear', className, ...props }) {
   return (
     <Comp
       data-slot="page-layout-content"
-      className={`${contentVariants[variant] ?? ''} ${className ?? ''}`}
+      className={clsx(contentVariants[variant], className)}
       {...props}
     />
   )

@@ -17,7 +17,10 @@ export default {
       <InputGroup.Addon>
         <InputGroup.Text>Артикул</InputGroup.Text>
       </InputGroup.Addon>
-      <InputGroup.Input aria-label="Артикул" placeholder="Например, 1234567890" />
+      <InputGroup.Input
+        aria-label="Артикул"
+        placeholder="Например, 1234567890"
+      />
       <InputGroup.Button onClick={args.onClick}>Найти</InputGroup.Button>
     </InputGroup>
   ),
@@ -42,7 +45,11 @@ export const TextAddon = {
       <InputGroup.Addon>
         <InputGroup.Text>руб.</InputGroup.Text>
       </InputGroup.Addon>
-      <InputGroup.Input aria-label="Цена" placeholder="0.00" inputMode="decimal" />
+      <InputGroup.Input
+        aria-label="Цена"
+        placeholder="0.00"
+        inputMode="decimal"
+      />
     </InputGroup>
   ),
   play: async ({ canvasElement }) => {
@@ -60,7 +67,10 @@ export const InlineEndButton = {
   },
   render: (args) => (
     <InputGroup>
-      <InputGroup.Input aria-label="Поиск" defaultValue="ABC-123" />
+      <InputGroup.Input
+        aria-label="Поиск"
+        defaultValue="ABC-123"
+      />
       <InputGroup.Button onClick={args.onClick}>Очистить</InputGroup.Button>
     </InputGroup>
   ),
@@ -76,7 +86,11 @@ export const InlineEndButton = {
 export const Textarea = {
   render: () => (
     <InputGroup>
-      <InputGroup.Textarea aria-label="Комментарий" rows={3} placeholder="Комментарий к заказу" />
+      <InputGroup.Textarea
+        aria-label="Комментарий"
+        rows={3}
+        placeholder="Комментарий к заказу"
+      />
     </InputGroup>
   ),
   play: async ({ canvasElement }) => {
@@ -94,7 +108,10 @@ export const BlockStartAddon = {
       <InputGroup.Addon align="block-start">
         <InputGroup.Text>Комментарий</InputGroup.Text>
       </InputGroup.Addon>
-      <InputGroup.Textarea aria-label="Комментарий" rows={3} />
+      <InputGroup.Textarea
+        aria-label="Комментарий"
+        rows={3}
+      />
     </InputGroup>
   ),
   play: async ({ canvasElement }) => {

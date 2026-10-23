@@ -67,7 +67,7 @@ export default defineConfig({
     mkcert(),
     createSvgSpritePlugin({
       exportType: 'react',
-      include: '**/src/shared/assets/info.svg',
+      include: '**/src/shared/assets/*.svg',
     }),
   ]),
   resolve: {
@@ -79,6 +79,13 @@ export default defineConfig({
   },
   test: {
     projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/**/*.test.{js,jsx}'],
+        },
+      },
       {
         extends: true,
         optimizeDeps: {

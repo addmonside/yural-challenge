@@ -1,13 +1,10 @@
 // oxlint-disable react/only-export-components
+import { clsx } from 'clsx'
 import styles from './alert.module.scss'
 
 const alertVariants = {
   default: 'bg-body text-body',
   destructive: 'bg-body text-danger',
-}
-
-function cn(...classes) {
-  return classes.filter(Boolean).join(' ')
 }
 
 function AlertRoot({ className, variant = 'default', ...props }) {
@@ -16,7 +13,7 @@ function AlertRoot({ className, variant = 'default', ...props }) {
       data-slot="alert"
       data-variant={variant}
       role="alert"
-      className={cn(
+      className={clsx(
         styles.alert,
         'position-relative border rounded-4 px-3 py-2 text-start small',
         alertVariants[variant] ?? alertVariants.default,
@@ -28,14 +25,20 @@ function AlertRoot({ className, variant = 'default', ...props }) {
 }
 
 function AlertTitle({ className, ...props }) {
-  return <div data-slot="alert-title" className={cn('fw-semibold', className)} {...props} />
+  return (
+    <div
+      data-slot="alert-title"
+      className={clsx('fw-semibold', className)}
+      {...props}
+    />
+  )
 }
 
 function AlertDescription({ className, ...props }) {
   return (
     <div
       data-slot="alert-description"
-      className={cn(styles.description, 'lh-1', className)}
+      className={clsx(styles.description, 'lh-1', className)}
       {...props}
     />
   )
@@ -45,7 +48,7 @@ function AlertAction({ className, ...props }) {
   return (
     <div
       data-slot="alert-action"
-      className={cn('position-absolute top-0 end-0 p-2', className)}
+      className={clsx('position-absolute top-0 end-0 p-2', className)}
       {...props}
     />
   )

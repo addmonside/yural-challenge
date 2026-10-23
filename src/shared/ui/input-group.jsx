@@ -1,4 +1,5 @@
 // oxlint-disable react/only-export-components
+import { clsx } from 'clsx'
 import { Button } from './button'
 import { Input } from './input'
 
@@ -9,12 +10,14 @@ const addonAlignClasses = {
   'block-end': 'order-last w-100 justify-content-start',
 }
 
-function cn(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 function InputGroupRoot({ className, ...props }) {
-  return <fieldset data-slot="input-group" className={cn('input-group', className)} {...props} />
+  return (
+    <fieldset
+      data-slot="input-group"
+      className={clsx('input-group', className)}
+      {...props}
+    />
+  )
 }
 
 function InputGroupAddon({ align = 'inline-start', className, onPointerDown, ...props }) {
@@ -33,7 +36,7 @@ function InputGroupAddon({ align = 'inline-start', className, onPointerDown, ...
     <div
       data-slot="input-group-addon"
       data-align={align}
-      className={cn(
+      className={clsx(
         'input-group-text d-flex align-items-center justify-content-center gap-2 text-body-secondary',
         addonAlignClasses[align] ?? addonAlignClasses['inline-start'],
         className,
@@ -49,7 +52,7 @@ function InputGroupButton({ className, type = 'button', variant = 'ghost', ...pr
     <Button
       type={type}
       variant={variant}
-      className={cn('d-inline-flex align-items-center gap-2 shadow-none', className)}
+      className={clsx('d-inline-flex align-items-center gap-2 shadow-none', className)}
       {...props}
     />
   )
@@ -59,7 +62,7 @@ function InputGroupText({ className, ...props }) {
   return (
     <span
       data-slot="input-group-text"
-      className={cn('d-flex align-items-center gap-2 small text-body-secondary', className)}
+      className={clsx('d-flex align-items-center gap-2 small text-body-secondary', className)}
       {...props}
     />
   )
@@ -67,7 +70,11 @@ function InputGroupText({ className, ...props }) {
 
 function InputGroupInput({ className, ...props }) {
   return (
-    <Input data-slot="input-group-control" className={cn('flex-grow-1', className)} {...props} />
+    <Input
+      data-slot="input-group-control"
+      className={clsx('flex-grow-1', className)}
+      {...props}
+    />
   )
 }
 
@@ -75,7 +82,7 @@ function InputGroupTextarea({ className, ...props }) {
   return (
     <textarea
       data-slot="input-group-control"
-      className={cn('form-control flex-grow-1', className)}
+      className={clsx('form-control flex-grow-1', className)}
       {...props}
     />
   )
