@@ -27,25 +27,16 @@ function PageLayoutTitle({ children, className, ...props }) {
   )
 }
 
-function PageLayoutDescription({ children, className, ...props }) {
-  return (
-    <p
-      className={clsx('lead text-body-secondary', className)}
-      data-slot="page-layout-description"
-      {...props}
-    >
-      {children}
-    </p>
-  )
-}
-
 function PageLayoutHeader({ as, className, ...props }) {
   const Comp = as ?? 'header'
 
   return (
     <Comp
       data-slot="page-layout-header"
-      className={clsx('bg-body d-flex flex-column gap-2 rounded-bottom-4 pt-5 pb-4', className)}
+      className={clsx(
+        'bg-body d-flex flex-row gap-2 rounded-bottom-4 pt-5 pb-4 align-items-center',
+        className,
+      )}
       {...props}
     />
   )
@@ -114,7 +105,6 @@ function PageLayoutEmpty({ title, description, icon }) {
 export const PageLayout = Object.assign(PageLayoutRoot, {
   Header: PageLayoutHeader,
   Title: PageLayoutTitle,
-  Description: PageLayoutDescription,
   Content: PageLayoutContent,
   Toolbar: PageLayoutToolbar,
   Error: PageLayoutError,

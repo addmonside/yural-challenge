@@ -3,11 +3,8 @@ import { useParts } from '../model/use-parts'
 import { PartBrandListSkeleton } from './part-brand-list-skeleton'
 import { PartListItem } from './part-list-item'
 import BarcodeIcon from '@/shared/assets/barcode.svg'
-import ArrowLeftIcon from '@/shared/assets/arrow-left.svg'
-import { Text } from '@/shared/ui/text'
-import { Button } from '@/shared/ui/button'
 
-export function PartList({ article, brand, onClearBrand }) {
+export function PartList({ article, brand }) {
   const { list, isPending, error } = useParts(article, brand, true)
 
   return (
@@ -15,20 +12,6 @@ export function PartList({ article, brand, onClearBrand }) {
       as="section"
       variant="flex"
     >
-      <header className="d-flex align-items-center">
-        <Button
-          onClick={onClearBrand}
-          variant="ghost"
-        >
-          <ArrowLeftIcon />
-        </Button>
-        <Text
-          as="h2"
-          size="lg"
-        >
-          {brand}
-        </Text>
-      </header>
       {isPending ? (
         <PartBrandListSkeleton />
       ) : error ? (

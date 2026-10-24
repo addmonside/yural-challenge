@@ -1,10 +1,14 @@
+import { href, Link } from 'react-router'
+import SearchIcon from '@/shared/assets/search.svg'
+import BarcodeIcon from '@/shared/assets/barcode.svg'
+import { useQueryParam } from '@/shared/lib'
+import { routes } from '@/shared/model'
 import { PageLayout } from '@/shared/ui/page-layout'
 import { useParts } from '../model/use-parts'
 import { PartBrandListSkeleton } from './part-brand-list-skeleton'
-import BarcodeIcon from '@/shared/assets/barcode.svg'
-import SearchIcon from '@/shared/assets/search.svg'
 
-export function PartBrandList({ article, onSelect }) {
+export function PartBrandList() {
+  const [article] = useQueryParam('search')
   const { brandNameList, isPending, error } = useParts(article)
   const hasArticle = Boolean(article?.trim())
 
@@ -47,15 +51,17 @@ export function PartBrandList({ article, onSelect }) {
       className="list-group"
     >
       {brandNameList.map((brand) => (
-        <button
+        <Link
           key={brand}
           className="list-group-item list-group-item-action text-start"
-          type="button"
+          to={href(routes.PART_LIST_BY_BRAND, {
+            brand,
+            article,
+          })}
           aria-label={`Выбрать производителя ${brand}`}
-          onClick={() => onSelect(brand)}
         >
           {brand}
-        </button>
+        </Link>
       ))}
     </PageLayout.Content>
   )

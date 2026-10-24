@@ -16,9 +16,6 @@ export const Default = {
     <PageLayout>
       <PageLayout.Header>
         <PageLayout.Title>Поиск автозапчастей</PageLayout.Title>
-        <PageLayout.Description>
-          Найдите производителей и аналоги по артикулу.
-        </PageLayout.Description>
       </PageLayout.Header>
       <PageLayout.Toolbar>
         <span className="fw-semibold">Найдено: 3</span>
@@ -59,9 +56,6 @@ export const WithError = {
     <PageLayout>
       <PageLayout.Header>
         <PageLayout.Title>Поиск автозапчастей</PageLayout.Title>
-        <PageLayout.Description>
-          Найдите производителей и аналоги по артикулу.
-        </PageLayout.Description>
       </PageLayout.Header>
       <PageLayout.Error error={args.error} />
       <PageLayout.Content as="main">

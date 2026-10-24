@@ -2,14 +2,14 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-export function usePartSearchField() {
+export function usePartBrandSearchField({ article }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { article: '' },
+    defaultValues: { article },
     mode: 'onChange',
   })
 

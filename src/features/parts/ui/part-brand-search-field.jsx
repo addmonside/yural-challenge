@@ -1,10 +1,12 @@
-import { InputGroup } from '@/shared/ui/input-group'
-import { usePartSearchField } from './use-part-search-field'
 import { useCallback } from 'react'
+import { useQueryParam } from '@/shared/lib'
+import { InputGroup } from '@/shared/ui/input-group'
+import { usePartBrandSearchField } from '../model/use-part-brand-search-field'
 
-export function PartSearchField({ onSearch }) {
-  const { isPending, handleSubmit, register, errors } = usePartSearchField()
-  const handle = useCallback((data) => onSearch(data.article), [onSearch])
+export function PartBrandSearchField() {
+  const [search, setSearch] = useQueryParam('search')
+  const { isPending, handleSubmit, register, errors } = usePartBrandSearchField({ article: search })
+  const handle = useCallback((data) => setSearch(data.article), [setSearch])
 
   return (
     <form
