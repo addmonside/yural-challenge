@@ -84,7 +84,19 @@ export default defineConfig({
         extends: true,
         test: {
           name: 'unit',
+          environment: 'node',
           include: ['src/**/*.test.{js,jsx}'],
+          exclude: ['**/node_modules/**', 'src/**/*.integration.test.{js,jsx}'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'integration',
+          environment: 'jsdom',
+          include: ['src/**/*.integration.test.{js,jsx}'],
+          setupFiles: ['./test/setup.js'],
+          passWithNoTests: true,
         },
       },
       {
@@ -93,12 +105,13 @@ export default defineConfig({
           include: [
             'vite-plugin-svg-sprite/runtime/adapters/react.js',
             'vite-plugin-svg-sprite/runtime/inject.js',
+            'react-router',
           ],
         },
         plugins: [
           createSvgSpritePlugin({
             exportType: 'react',
-            include: '**/src/shared/assets/info.svg',
+            include: '**/src/shared/assets/*.svg',
           }),
           // The plugin will run tests for the stories defined in your Storybook config
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
