@@ -13,12 +13,65 @@ const initialState = {
   requestedHasAnalogues: false,
 }
 
-function getGoods(goods) {
-  return Array.isArray(goods) ? goods.filter((good) => Boolean(good?.brand?.trim())) : []
+function getBrand(value) {
+  return typeof value === 'string' ? value.trim() : ''
 }
 
-function getBrandNames(list) {
-  return [...new Set(list.map((good) => good.brand.trim()))]
+function getLowestWarehousePrice(good) {
+  if (!Array.isArray(good?.warehouses)) {
+    return 0
+  }
+
+  const prices = good.warehouses
+    .map((warehouse) => Number(warehouse?.price))
+    .filter((price) => Number.isFinite(price) && price > 0)
+
+  return prices.length > 0 ? Math.min(...prices) : 0
+}
+
+function normalizeGood(good) {
+  const count = Number(good.count)
+
+  return {
+    goodsID: good.goodsID,
+    brand: getBrand(good.brand),
+    name: good.name,
+    number: good.number,
+    count: Number.isFinite(count) ? count : 0,
+    price: getLowestWarehousePrice(good),
+  }
+}
+
+function getGoods(goods) {
+  return Array.isArray(goods) ? goods.filter((good) => Boolean(getBrand(good?.brand))) : []
+}
+
+function getBrandNames(goods) {
+  return [...new Set(goods.map((good) => getBrand(good.brand)))]
+}
+
+function getList(goods, hasAnalogues) {
+  const items = hasAnalogues
+    ? goods.flatMap((good) => [good, ...(Array.isArray(good?.analogues) ? good.analogues : [])])
+    : goods
+  const seenGoodsIds = new Set()
+
+  return items
+    .filter((good) => Boolean(getBrand(good?.brand)))
+    .map(normalizeGood)
+    .filter((good) => {
+      if (!good.goodsID) {
+        return true
+      }
+
+      if (seenGoodsIds.has(good.goodsID)) {
+        return false
+      }
+
+      seenGoodsIds.add(good.goodsID)
+
+      return true
+    })
 }
 
 export const fetchParts = createAsyncThunk(
@@ -38,12 +91,14 @@ export const fetchParts = createAsyncThunk(
 
     try {
       const data = await api.get(`${endpoints.HS_PRICE}?${search}`)
+      const goods = getGoods(data?.goods)
 
       return {
         number: normalizedNumber,
         brand: normalizedBrand,
         hasAnalogues: Boolean(hasAnalogues),
-        list: getGoods(data?.goods),
+        list: getList(goods, hasAnalogues),
+        brandNameList: getBrandNames(goods),
       }
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : defaultErrorMessage)
@@ -80,7 +135,7 @@ const partsSlice = createSlice({
 
         state.status = 'succeeded'
         state.list = action.payload.list
-        state.brandNameList = getBrandNames(action.payload.list)
+        state.brandNameList = action.payload.brandNameList
       })
       .addCase(fetchParts.rejected, (state, action) => {
         const number = action.meta.arg.number?.trim() ?? ''

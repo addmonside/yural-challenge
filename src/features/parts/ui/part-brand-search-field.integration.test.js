@@ -43,22 +43,33 @@ describe('PartBrandSearchField', () => {
     expect(screen.getByRole('button', { name: 'Найти' })).toBeVisible()
   })
 
-  it('writes a valid article into the query param', async () => {
+  it('writes a valid article with letters into the query param', async () => {
     const user = userEvent.setup()
     renderField()
 
-    await user.type(screen.getByRole('textbox', { name: 'Артикул' }), '123456')
+    await user.type(screen.getByRole('textbox', { name: 'Артикул' }), '7160500039S')
 
-    await waitFor(() => expect(getLocation()).toBe('?search=123456'))
+    await waitFor(() => expect(getLocation()).toBe('?search=7160500039S'))
+  })
+
+  it('writes a valid article with a slash into the query param', async () => {
+    const user = userEvent.setup()
+    renderField()
+
+    await user.type(screen.getByRole('textbox', { name: 'Артикул' }), '7160500039/S')
+
+    await waitFor(() => expect(getLocation()).toBe('?search=7160500039%2FS'))
   })
 
   it('does not write an invalid article into the query param', async () => {
     const user = userEvent.setup()
     renderField()
 
-    await user.type(screen.getByRole('textbox', { name: 'Артикул' }), 'abc')
+    await user.type(screen.getByRole('textbox', { name: 'Артикул' }), '12 34')
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('Только цифры')
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Только буквы, цифры и допустимые символы',
+    )
     expect(getLocation()).toBe('')
   })
 

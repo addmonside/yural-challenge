@@ -7,6 +7,7 @@ import BarcodeIcon from '@/shared/assets/barcode.svg'
 
 export function PartList({ article, brand }) {
   const { list, isPending, error } = useParts(article, brand, true)
+  const sortedList = [...list].sort((a, b) => Number(b.count > 0) - Number(a.count > 0))
 
   return (
     <PageLayout.Content
@@ -17,22 +18,22 @@ export function PartList({ article, brand }) {
         <PartListSkeleton />
       ) : error ? (
         <PageLayout.Error
-          title="Не удалось загрузить производителей"
+          title="Не удалось загрузить аналоги"
           error={error}
         />
       ) : list.length === 0 ? (
         <PageLayout.Empty
           icon={<BarcodeIcon />}
           title="Нет подходящих запчастей"
-          description={`Для Артикула ${article}  и бренда ${brand} нет подзодящих запчастей`}
+          description={`Для артикула ${article} и бренда ${brand} нет подходящих запчастей`}
         />
       ) : (
         <>
           <PartListHeader />
           <ol className="list-group">
-            {list.map((part) => (
+            {sortedList.map((part, index) => (
               <PartListItem
-                key={part.brand}
+                key={part.goodsID || `${part.brand}-${index}`}
                 brand={part.brand}
                 name={part.name}
                 count={part.count}

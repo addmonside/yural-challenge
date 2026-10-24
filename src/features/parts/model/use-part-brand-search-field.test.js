@@ -52,7 +52,7 @@ describe('usePartBrandSearchField', () => {
   })
 
   it('exposes validation errors', () => {
-    const errors = { article: { message: 'Только цифры' } }
+    const errors = { article: { message: 'Только буквы, цифры и допустимые символы' } }
     mockForm({ errors })
 
     const result = usePartBrandSearchField({ article: 'abc' })

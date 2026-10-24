@@ -1,11 +1,13 @@
+import { clsx } from 'clsx'
 import { Price } from '@/shared/ui/price'
 import { Text } from '@/shared/ui/text'
 import { useIsMobile } from '@/shared/lib'
+import styles from './part-list-item.module.scss'
 
 export function PartListItem({ brand, name, count, price }) {
   const isMobile = useIsMobile(768)
   return (
-    <li className="list-group-item list-group-item-action">
+    <li className={clsx('list-group-item list-group-item-action', count <= 0 && styles.outOfStock)}>
       <div className="row g-2 align-items-center">
         <div className="col-12 col-md-8 d-flex flex-column">
           <Text

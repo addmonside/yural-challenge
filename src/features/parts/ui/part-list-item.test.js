@@ -2,6 +2,7 @@ import { createElement } from 'react'
 import { describe, expect, it } from 'vite-plus/test'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { PartListItem } from './part-list-item'
+import styles from './part-list-item.module.scss'
 
 const NBSP = '\u00a0'
 
@@ -30,6 +31,14 @@ describe('PartListItem', () => {
     expect(render()).toContain(
       '<p class="col-6 col-md-1 mb-0 text-start text-md-center"><span>12</span></p>',
     )
+  })
+
+  it('fades out-of-stock positions', () => {
+    expect(render({ count: 0 })).toContain(styles.outOfStock)
+  })
+
+  it('does not fade positions in stock', () => {
+    expect(render()).not.toContain(styles.outOfStock)
   })
 
   it('renders the formatted price', () => {

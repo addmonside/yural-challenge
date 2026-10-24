@@ -45,7 +45,8 @@ describe('PartList', () => {
   it('renders an API error', () => {
     const markup = render({ state: { ...emptyState, error: 'Request quota exceeded!' } })
 
-    expect(markup).toContain('Не удалось загрузить производителей')
+    expect(markup).toContain('Не удалось загрузить аналоги')
+    expect(markup).not.toContain('Не удалось загрузить производителей')
     expect(markup).toContain('Request quota exceeded!')
   })
 
@@ -55,6 +56,36 @@ describe('PartList', () => {
     expect(markup).toContain('Нет подходящих запчастей')
     expect(markup).toContain('01089')
     expect(markup).toContain('OSSCA')
+    expect(markup).toContain('нет подходящих запчастей')
+    expect(markup).not.toContain('подзодящих')
+  })
+
+  it('renders several positions with the same brand', () => {
+    const markup = render({
+      state: {
+        ...emptyState,
+        list: [
+          { goodsID: 'main', brand: 'MEYLE', name: 'Рычаг', count: 20, price: 12533.62 },
+          { goodsID: 'analogue', brand: 'MEYLE', name: 'Рычаг короткий', count: 0, price: 0 },
+        ],
+      },
+    })
+
+    expect(markup.match(/Рычаг/g)).toHaveLength(2)
+  })
+
+  it('renders out-of-stock positions at the end of the list', () => {
+    const markup = render({
+      state: {
+        ...emptyState,
+        list: [
+          { goodsID: 'empty', brand: 'OSSCA', name: 'Позиция без остатка', count: 0, price: 0 },
+          { goodsID: 'available', brand: 'OSSCA', name: 'Позиция в наличии', count: 5, price: 100 },
+        ],
+      },
+    })
+
+    expect(markup.indexOf('Позиция в наличии')).toBeLessThan(markup.indexOf('Позиция без остатка'))
   })
 
   it('renders the parts list', () => {
