@@ -1,32 +1,34 @@
-import { useCallback, useEffect } from 'react'
-import { useDebouncedValue, useQueryParam } from '@/shared/lib'
+import { useCallback } from 'react'
+import { useDebouncedCallback, useQueryParam } from '@/shared/lib'
 import { InputGroup } from '@/shared/ui/input-group'
 import { isValidArticle } from '../model/article-schema'
 import { usePartBrandSearchField } from '../model/use-part-brand-search-field'
 
 export function PartBrandSearchField() {
   const [search, setSearch] = useQueryParam('search')
-  const { isPending, handleSubmit, register, watch, errors } = usePartBrandSearchField({
+  const { isPending, handleSubmit, register, errors } = usePartBrandSearchField({
     article: search,
   })
-  const article = (watch('article') ?? '').trim()
-  const debouncedArticle = useDebouncedValue(article, 400)
-  const handle = useCallback((data) => setSearch(data.article), [setSearch])
 
-  useEffect(() => {
-    if (debouncedArticle === (search ?? '')) {
-      return
-    }
+  const syncSearch = useDebouncedCallback((raw) => {
+    const value = raw.trim()
 
-    if (!debouncedArticle) {
+    if (!value) {
       setSearch('', { replace: true })
-      return
+    } else if (isValidArticle(value)) {
+      setSearch(value, { replace: true })
     }
+  }, 400)
 
-    if (isValidArticle(debouncedArticle)) {
-      setSearch(debouncedArticle, { replace: true })
-    }
-  }, [debouncedArticle, search, setSearch])
+  const handle = useCallback(
+    (data) => {
+      syncSearch.cancel()
+      setSearch(data.article)
+    },
+    [setSearch, syncSearch],
+  )
+
+  const { onChange, ...articleField } = register('article')
 
   return (
     <form
@@ -41,7 +43,11 @@ export function PartBrandSearchField() {
         <InputGroup.Input
           aria-label="Артикул"
           placeholder="Например, 1234567890"
-          {...register('article')}
+          {...articleField}
+          onChange={(e) => {
+            onChange(e)
+            syncSearch(e.target.value)
+          }}
         />
         <InputGroup.Button
           type="submit"

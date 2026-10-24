@@ -14,21 +14,12 @@ export function PartBrandListSkeleton() {
       {rows.map((row) => (
         <span
           key={row}
-          className="list-group-item d-flex align-items-center gap-3 py-3"
+          className="list-group-item d-flex align-items-center gap-3"
         >
           <Skeleton
             as="span"
             className="flex-grow-1"
-          />
-          <Skeleton
-            as="span"
-            className="flex-shrink-0"
-            style={{ width: '2rem' }}
-          />
-          <Skeleton
-            as="span"
-            className="flex-shrink-0"
-            style={{ width: '5rem' }}
+            style={{ height: '1.5rem' }}
           />
         </span>
       ))}
