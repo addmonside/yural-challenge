@@ -1,6 +1,6 @@
 import { PageLayout } from '@/shared/ui/page-layout'
 import { useParts } from '../model/use-parts'
-import { PartListSkeleton } from './part-list-skeleton'
+import { PartBrandListSkeleton } from './part-brand-list-skeleton'
 import BarcodeIcon from '@/shared/assets/barcode.svg'
 import SearchIcon from '@/shared/assets/search.svg'
 
@@ -19,7 +19,7 @@ export function PartBrandList({ article, onSelect }) {
   }
 
   if (isPending) {
-    return <PartListSkeleton />
+    return <PartBrandListSkeleton />
   }
 
   if (error) {

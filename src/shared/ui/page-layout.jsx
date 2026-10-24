@@ -67,11 +67,12 @@ function PageLayoutToolbar({ as, className, ...props }) {
 }
 
 const contentVariants = {
-  clear: 'pb-4 pt-4',
-  centered: 'd-flex flex-column flex-grow-1 align-items-center justify-content-center',
+  default: 'pb-4 pt-4',
+  flex: 'pb-4 pt-4 d-flex flex-column gap-2',
+  centered: 'pb-4 pt-4 d-flex flex-column flex-grow-1 align-items-center justify-content-center',
 }
 
-function PageLayoutContent({ as, variant = 'clear', className, ...props }) {
+function PageLayoutContent({ as, variant = 'default', className, ...props }) {
   const Comp = as || 'div'
   return (
     <Comp

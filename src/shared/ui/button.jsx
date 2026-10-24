@@ -30,6 +30,6 @@ export function Button({
 
 const variants = new Map([
   ['primary', 'btn-primary'],
-  ['ghost', 'btn-outline-primary border-0'],
+  ['ghost', styles.ghost],
   ['outline', 'btn-outline-primary'],
 ])

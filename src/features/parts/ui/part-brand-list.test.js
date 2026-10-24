@@ -39,10 +39,13 @@ describe('PartBrandList', () => {
     expect(markup).toContain('AP')
   })
 
-  it('renders a loader while parts are loading', () => {
+  it('renders a skeleton while parts are loading', () => {
     useParts.mockReturnValue({ ...emptyState, isPending: true })
 
-    expect(render()).toContain('spinner-border')
+    const markup = render()
+
+    expect(markup).toContain('aria-busy="true"')
+    expect(markup.match(/data-slot="skeleton"/g)).toHaveLength(30)
   })
 
   it('renders an API error', () => {

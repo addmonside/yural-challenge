@@ -1,0 +1,30 @@
+.root {
+  display: block;
+  min-height: 1rem;
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-secondary-bg);
+  background-image: linear-gradient(
+    90deg,
+    var(--bs-secondary-bg) 0%,
+    var(--bs-tertiary-bg) 50%,
+    var(--bs-secondary-bg) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    animation: none;
+  }
+}

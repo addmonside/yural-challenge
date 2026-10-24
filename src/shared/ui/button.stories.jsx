@@ -43,7 +43,7 @@ export const Ghost = {
   play: async ({ canvasElement }) => {
     const button = within(canvasElement).getByRole('button', { name: 'Найти' })
 
-    await expect(button).toHaveClass('btn-outline-primary')
+    await expect(button).toHaveAttribute('data-variant', 'ghost')
   },
 }
 
