@@ -1,5 +1,7 @@
+import { createElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { StaticRouter } from 'react-router'
 import { useParts } from '../model/use-parts'
 import { PartBrandList } from './part-brand-list'
 
@@ -12,10 +14,19 @@ const emptyState = {
   brandNameList: [],
   isPending: false,
   error: null,
+  refetch: vi.fn(),
 }
 
-function render(props) {
-  return renderToStaticMarkup(PartBrandList({ article: '01089', onSelect: vi.fn(), ...props }))
+function render({ article = '01089', state = emptyState } = {}) {
+  useParts.mockReturnValue(state)
+
+  return renderToStaticMarkup(
+    createElement(
+      StaticRouter,
+      { location: article ? `/?search=${article}` : '/' },
+      createElement(PartBrandList),
+    ),
+  )
 }
 
 describe('PartBrandList', () => {
@@ -23,46 +34,43 @@ describe('PartBrandList', () => {
     useParts.mockReset()
   })
 
-  it('renders parts as selectable buttons', () => {
-    useParts.mockReturnValue({
-      ...emptyState,
-      list: [
-        { brand: 'OSSCA', goodsID: 'goods-1', name: 'Датчик' },
-        { brand: 'AP', goodsID: 'goods-2', name: 'Ролик' },
-      ],
+  it('requests parts for the article from the search param', () => {
+    render()
+
+    expect(useParts).toHaveBeenCalledWith('01089')
+  })
+
+  it('renders parts as selectable links', () => {
+    const markup = render({
+      state: { ...emptyState, brandNameList: ['OSSCA', 'AP'] },
     })
 
-    const markup = render()
-
-    expect(markup).toContain('list-group-item-action')
-    expect(markup).toContain('OSSCA')
-    expect(markup).toContain('AP')
+    expect(markup).toContain('href="/parts/OSSCA/01089"')
+    expect(markup).toContain('href="/parts/AP/01089"')
+    expect(markup).toContain('aria-label="Выбрать производителя OSSCA"')
+    expect(markup).toContain('aria-label="Выбрать производителя AP"')
   })
 
   it('renders a skeleton while parts are loading', () => {
-    useParts.mockReturnValue({ ...emptyState, isPending: true })
-
-    const markup = render()
+    const markup = render({ state: { ...emptyState, isPending: true } })
 
     expect(markup).toContain('aria-busy="true"')
     expect(markup.match(/data-slot="skeleton"/g)).toHaveLength(30)
   })
 
   it('renders an API error', () => {
-    useParts.mockReturnValue({ ...emptyState, error: 'Request quota exceeded!' })
+    const markup = render({
+      state: { ...emptyState, error: 'Request quota exceeded!' },
+    })
 
-    expect(render()).toContain('Request quota exceeded!')
+    expect(markup).toContain('Request quota exceeded!')
   })
 
   it('renders an empty message when no parts are found', () => {
-    useParts.mockReturnValue(emptyState)
-
-    expect(render()).toContain('Производители не найдены')
+    expect(render()).toContain('Нет подходящих запчастей')
   })
 
   it('renders a prompt until an article is provided', () => {
-    useParts.mockReturnValue(emptyState)
-
     expect(render({ article: '' })).toContain('Не введен артикул')
   })
 })

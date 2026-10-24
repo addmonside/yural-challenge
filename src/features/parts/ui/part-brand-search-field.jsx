@@ -1,12 +1,32 @@
-import { useCallback } from 'react'
-import { useQueryParam } from '@/shared/lib'
+import { useCallback, useEffect } from 'react'
+import { useDebouncedValue, useQueryParam } from '@/shared/lib'
 import { InputGroup } from '@/shared/ui/input-group'
+import { isValidArticle } from '../model/article-schema'
 import { usePartBrandSearchField } from '../model/use-part-brand-search-field'
 
 export function PartBrandSearchField() {
   const [search, setSearch] = useQueryParam('search')
-  const { isPending, handleSubmit, register, errors } = usePartBrandSearchField({ article: search })
+  const { isPending, handleSubmit, register, watch, errors } = usePartBrandSearchField({
+    article: search,
+  })
+  const article = (watch('article') ?? '').trim()
+  const debouncedArticle = useDebouncedValue(article, 400)
   const handle = useCallback((data) => setSearch(data.article), [setSearch])
+
+  useEffect(() => {
+    if (debouncedArticle === (search ?? '')) {
+      return
+    }
+
+    if (!debouncedArticle) {
+      setSearch('', { replace: true })
+      return
+    }
+
+    if (isValidArticle(debouncedArticle)) {
+      setSearch(debouncedArticle, { replace: true })
+    }
+  }, [debouncedArticle, search, setSearch])
 
   return (
     <form

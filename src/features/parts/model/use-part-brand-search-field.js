@@ -1,25 +1,18 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { articleFormSchema } from './article-schema'
 
 export function usePartBrandSearchField({ article }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(articleFormSchema),
     defaultValues: { article },
     mode: 'onChange',
   })
 
-  return { register, handleSubmit, errors, isPending: isSubmitting }
+  return { register, handleSubmit, watch, errors, isPending: isSubmitting }
 }
-
-const schema = z.object({
-  article: z
-    .string()
-    .min(2, 'Не меньше 2 символов')
-    .max(24, 'Не больше 24 символов')
-    .regex(/^\d+$/, 'Только цифры'),
-})

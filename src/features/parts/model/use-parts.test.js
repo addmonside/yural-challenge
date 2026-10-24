@@ -1,26 +1,14 @@
-import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAccount } from '@/services/account/use-account'
-import { fetchParts } from './parts-slice'
+// @vitest-environment jsdom
+import { configureStore } from '@reduxjs/toolkit'
+import { cleanup, renderHook } from '@testing-library/react'
+import { createElement } from 'react'
+import { Provider } from 'react-redux'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
+import { fetchParts, partsReducer } from './parts-slice'
 import { useParts } from './use-parts'
 
-vi.mock('react', async (importOriginal) => {
-  const actual = await importOriginal()
-
-  return {
-    ...actual,
-    useEffect: (effect) => effect(),
-    useCallback: (callback) => callback,
-  }
-})
-
-vi.mock('react-redux', () => ({
-  useDispatch: vi.fn(),
-  useSelector: vi.fn(),
-}))
-
 vi.mock('@/services/account/use-account', () => ({
-  useAccount: vi.fn(),
+  useAccount: () => ({ id: 'key' }),
 }))
 
 vi.mock('./parts-slice', async (importOriginal) => {
@@ -42,23 +30,28 @@ const emptyState = {
   requestedHasAnalogues: false,
 }
 
-function mockState(overrides = {}) {
-  useSelector.mockReturnValue({ ...emptyState, ...overrides })
+function renderUseParts(number, brand, hasAnalogues, state = {}) {
+  const store = configureStore({
+    reducer: { parts: partsReducer },
+    preloadedState: { parts: { ...emptyState, ...state } },
+  })
+
+  return renderHook(() => useParts(number, brand, hasAnalogues), {
+    wrapper: ({ children }) => createElement(Provider, { store }, children),
+  })
 }
 
 describe('useParts', () => {
-  const dispatch = vi.fn()
-
   beforeEach(() => {
-    dispatch.mockReset()
     fetchParts.mockClear()
-    useDispatch.mockReturnValue(dispatch)
-    useAccount.mockReturnValue({ id: 'key' })
-    mockState()
+  })
+
+  afterEach(() => {
+    cleanup()
   })
 
   it('dispatches a request with a normalized number and brand', () => {
-    useParts(' 7160500039S ', ' MEYLE ')
+    renderUseParts(' 7160500039S ', ' MEYLE ')
 
     expect(fetchParts).toHaveBeenCalledWith({
       number: '7160500039S',
@@ -69,7 +62,7 @@ describe('useParts', () => {
   })
 
   it('dispatches a request with analogues when hasAnalogues is true', () => {
-    useParts('7160500039S', 'MEYLE', true)
+    renderUseParts('7160500039S', 'MEYLE', true)
 
     expect(fetchParts).toHaveBeenCalledWith({
       number: '7160500039S',
@@ -80,7 +73,7 @@ describe('useParts', () => {
   })
 
   it('dispatches a request without a brand when it is not provided', () => {
-    useParts('7160500039S')
+    renderUseParts('7160500039S')
 
     expect(fetchParts).toHaveBeenCalledWith({
       number: '7160500039S',
@@ -91,13 +84,13 @@ describe('useParts', () => {
   })
 
   it('does not dispatch a request for an empty part number', () => {
-    useParts('  ', 'MEYLE')
+    renderUseParts('  ', 'MEYLE')
 
     expect(fetchParts).not.toHaveBeenCalled()
   })
 
   it('hides data while another brand is loading', () => {
-    mockState({
+    const { result } = renderUseParts('7160500039S', 'OTHER', false, {
       list: [{ brand: 'MEYLE' }],
       brandNameList: ['MEYLE'],
       status: 'succeeded',
@@ -106,10 +99,8 @@ describe('useParts', () => {
       requestedHasAnalogues: false,
     })
 
-    const result = useParts('7160500039S', 'OTHER')
-
-    expect(result.isPending).toBe(true)
-    expect(result.list).toEqual([])
-    expect(result.brandNameList).toEqual([])
+    expect(result.current.isPending).toBe(true)
+    expect(result.current.list).toEqual([])
+    expect(result.current.brandNameList).toEqual([])
   })
 })
