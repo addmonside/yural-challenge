@@ -2,7 +2,6 @@ import { createElement } from 'react'
 import { describe, expect, it } from 'vite-plus/test'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { PartListItem } from './part-list-item'
-import styles from './part-list-item.module.scss'
 
 const NBSP = '\u00a0'
 
@@ -34,11 +33,11 @@ describe('PartListItem', () => {
   })
 
   it('fades out-of-stock positions', () => {
-    expect(render({ count: 0 })).toContain(styles.outOfStock)
+    expect(render({ count: 0 })).toContain('opacity-50')
   })
 
   it('does not fade positions in stock', () => {
-    expect(render()).not.toContain(styles.outOfStock)
+    expect(render()).not.toContain('opacity-50')
   })
 
   it('renders the formatted price', () => {
@@ -48,7 +47,7 @@ describe('PartListItem', () => {
   it('uses a responsive grid with the name on the first row on mobile', () => {
     const markup = render()
 
-    expect(markup).toContain('row g-2 align-items-center')
+    expect(markup).toContain('row align-items-center')
     expect(markup).toContain('col-12 col-md-8')
     expect(markup).toContain('col-6 col-md-3')
     expect(markup).not.toContain('style=')

@@ -14,14 +14,12 @@ export function PartList({ article, brand }) {
       as="section"
       variant="flex"
     >
-      {isPending ? (
-        <PartListSkeleton />
-      ) : error ? (
+      {!isPending && error ? (
         <PageLayout.Error
           title="Не удалось загрузить аналоги"
           error={error}
         />
-      ) : list.length === 0 ? (
+      ) : !isPending && list.length === 0 ? (
         <PageLayout.Empty
           icon={<BarcodeIcon />}
           title="Нет подходящих запчастей"
@@ -30,17 +28,21 @@ export function PartList({ article, brand }) {
       ) : (
         <>
           <PartListHeader />
-          <ol className="list-group">
-            {sortedList.map((part, index) => (
-              <PartListItem
-                key={part.goodsID || `${part.brand}-${index}`}
-                brand={part.brand}
-                name={part.name}
-                count={part.count}
-                price={part.price}
-              />
-            ))}
-          </ol>
+          {isPending ? (
+            <PartListSkeleton />
+          ) : (
+            <ol className="list-group">
+              {sortedList.map((part, index) => (
+                <PartListItem
+                  key={part.goodsID || `${part.brand}-${index}`}
+                  brand={part.brand}
+                  name={part.name}
+                  count={part.count}
+                  price={part.price}
+                />
+              ))}
+            </ol>
+          )}
         </>
       )}
     </PageLayout.Content>
