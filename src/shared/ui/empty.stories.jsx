@@ -56,7 +56,7 @@ export const IconMedia = {
     </Empty>
   ),
   play: async ({ canvasElement }) => {
-    const media = canvasElement.querySelector('[data-slot="empty-icon"]')
+    const media = canvasElement.querySelector('[data-slot="empty-media"]')
 
     await expect(media).toHaveAttribute('data-variant', 'icon')
     await expect(media?.querySelector('svg')).toBeInTheDocument()

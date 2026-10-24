@@ -14,7 +14,7 @@ const config = {
     config.plugins.push(
       createSvgSpritePlugin({
         exportType: 'react',
-        include: '**/src/shared/assets/info.svg',
+        include: '**/src/shared/assets/*.svg',
       }),
     )
 

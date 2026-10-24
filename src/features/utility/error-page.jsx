@@ -15,7 +15,7 @@ const ERROR_DATA = {
 
 function ErrorPage() {
   const { codeId = '404' } = useParams()
-  const data = ERROR_DATA[codeId] ?? ERROR_DATA[unknown]
+  const data = ERROR_DATA[codeId] ?? ERROR_DATA.unknown
 
   return (
     <PageLayout variant="centered">

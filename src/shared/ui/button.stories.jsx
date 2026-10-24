@@ -1,4 +1,4 @@
-import { expect, fn, userEvent, within } from 'storybook/test'
+import { expect, fireEvent, fn, userEvent, within } from 'storybook/test'
 import { Button } from './button'
 
 export default {
@@ -57,7 +57,7 @@ export const Disabled = {
 
     await expect(button).toBeDisabled()
 
-    await userEvent.click(button)
+    await fireEvent.click(button)
 
     await expect(args.onClick).not.toHaveBeenCalled()
   },

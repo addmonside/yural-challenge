@@ -3,7 +3,7 @@ import { expect, userEvent, within } from 'storybook/test'
 import { Input } from './input'
 
 export default {
-  title: 'Shared/UI/Input',
+  title: 'ui/Input',
   component: Input,
   tags: ['autodocs'],
   parameters: {
