@@ -1,0 +1,14 @@
+node_modules
+.git
+.gitignore
+.env
+.env.*
+dist
+dist-ssr
+coverage
+storybook-static
+*.log
+.DS_Store
+.zed
+.vscode
+.idea
