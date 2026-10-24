@@ -71,6 +71,9 @@ export default defineConfig({
       include: '**/src/shared/assets/*.svg',
     }),
   ]),
+  server: {
+    allowedHosts: ['app.yural-challenge.orb.local'],
+  },
   resolve: {
     tsconfigPaths: true,
     alias: {
