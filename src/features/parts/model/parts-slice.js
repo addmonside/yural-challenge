@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { api } from '@/shared/api/api'
 import { endpoints } from '@/shared/model/endpoints'
-import { apiMessages } from '@/shared/model/errors/messages'
+import { defaultErrorMessage } from '@/shared/model/errors/messages'
 
 const initialState = {
   list: [],
@@ -39,10 +39,6 @@ export const fetchParts = createAsyncThunk(
     try {
       const data = await api.get(`${endpoints.HS_PRICE}?${search}`)
 
-      if (data?.error) {
-        return rejectWithValue(data.error)
-      }
-
       return {
         number: normalizedNumber,
         brand: normalizedBrand,
@@ -50,7 +46,7 @@ export const fetchParts = createAsyncThunk(
         list: getGoods(data?.goods),
       }
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error instanceof Error ? error.message : defaultErrorMessage)
     }
   },
   {
@@ -102,7 +98,7 @@ const partsSlice = createSlice({
         state.status = 'failed'
         state.list = []
         state.brandNameList = []
-        state.error = action.payload ?? action.error.message ?? apiMessages.INTERNAL_ERROR
+        state.error = action.payload ?? action.error.message ?? defaultErrorMessage
       })
   },
 })

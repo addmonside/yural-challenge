@@ -1,20 +1,12 @@
-export const apiErrorCodes = Object.freeze({
-  BAD_REQUEST: 'BAD_REQUEST',
-  BUSINESS_ERROR: 'BUSINESS_ERROR',
-  EMPTY_BODY: 'EMPTY_BODY',
-  FORBIDDEN: 'FORBIDDEN',
-  INTERNAL_ERROR: 'INTERNAL_ERROR',
-  NOT_FOUND: 'NOT_FOUND',
-  UNAUTHORIZED: 'UNAUTHORIZED',
-  VALIDATION_ERROR: 'VALIDATION_ERROR',
+export const serverErrors = Object.freeze({
+  'Empty key!': 'Не указан ключ покупателя',
+  'Invalid key client!': 'Неверный ключ покупателя, покупатель не найден',
+  'Empty number goods!': 'Не указан номер детали',
+  'Request quota exceeded!': 'Вы превысили лимит запросов по грузовому ассортименту',
 })
 
-export const apiMessages = Object.freeze({
-  [apiErrorCodes.BAD_REQUEST]: 'Тело запроса повреждено или имеет ошибки',
-  [apiErrorCodes.EMPTY_BODY]: 'Тело запроса не должно быть пустым',
-  [apiErrorCodes.FORBIDDEN]: 'Доступ запрещен',
-  [apiErrorCodes.INTERNAL_ERROR]: 'Внутренняя ошибка сервера',
-  [apiErrorCodes.NOT_FOUND]: 'Запись не найдена',
-  [apiErrorCodes.UNAUTHORIZED]: 'Не авторизован',
-  [apiErrorCodes.VALIDATION_ERROR]: 'Ошибка валидации данных',
-})
+export const defaultErrorMessage = 'Не удалось выполнить запрос'
+
+export function getErrorMessage(error) {
+  return serverErrors[error] ?? defaultErrorMessage
+}

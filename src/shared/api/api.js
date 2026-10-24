@@ -1,4 +1,5 @@
-import { formatErrorToAppError } from '../model/errors/format-error-to-app-error'
+import { AppError, BusinessAppError } from '../model/errors/app-error'
+import { getErrorMessage } from '../model/errors/messages'
 import { handleBody } from './handle-body'
 import { handleHeaders } from './handle-headers'
 import { handleUrl } from './handle-url'
@@ -8,19 +9,36 @@ export async function api(uri, init) {
   const headers = await handleHeaders(init, needAuth)
   const body = init?.data ? handleBody(init.data) : undefined
 
-  const res = await fetch(url, {
-    ...init,
-    body,
-    headers,
-    signal: init?.signal,
-  })
+  try {
+    const res = await fetch(url, {
+      ...init,
+      body,
+      headers,
+      signal: init?.signal,
+    })
 
-  if (!res.ok) {
-    throw await formatErrorToAppError(res)
+    if (!res.ok) {
+      throw new AppError()
+    }
+
+    const result = await res.json()
+
+    if (result?.error) {
+      const messages = Array.isArray(result.error)
+        ? result.error.map(getErrorMessage)
+        : [getErrorMessage(result.error)]
+
+      throw new BusinessAppError(messages.join('; '))
+    }
+
+    return result
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error
+    }
+
+    throw new AppError()
   }
-
-  const result = await res.json()
-  return result
 }
 
 api.get = async (uri, init) => api(uri, { ...init, method: 'GET' })

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { api } from '@/shared/api/api'
+import { BusinessAppError } from '@/shared/model/errors/app-error'
 import { fetchParts, partsReducer } from './parts-slice'
 
 vi.mock('@/shared/api/api', () => ({
@@ -117,8 +118,10 @@ describe('parts slice', () => {
     expect(store.getState().parts.requestedBrand).toBe('SECOND')
   })
 
-  it('rejects when the API returns an error in the response body', async () => {
-    api.get.mockResolvedValue({ error: 'Request quota exceeded!' })
+  it('stores the translated API error message', async () => {
+    api.get.mockRejectedValue(
+      new BusinessAppError('Вы превысили лимит запросов по грузовому ассортименту'),
+    )
     const store = createStore()
 
     await store.dispatch(fetchParts({ number: '01089', key: 'key' }))
@@ -127,7 +130,7 @@ describe('parts slice', () => {
       list: [],
       brandNameList: [],
       status: 'failed',
-      error: 'Request quota exceeded!',
+      error: 'Вы превысили лимит запросов по грузовому ассортименту',
       requestedNumber: '01089',
       requestedBrand: '',
       requestedHasAnalogues: false,
