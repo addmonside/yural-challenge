@@ -53,14 +53,14 @@ export function PartBrandList() {
       {brandNameList.map((brand) => (
         <Link
           key={brand}
-          className="list-group-item list-group-item-action text-start"
+          className="list-group-item list-group-item-action text-start d-flex align-items-center"
           to={href(routes.PART_LIST_BY_BRAND, {
             brand,
             article,
           })}
           aria-label={`Выбрать производителя ${brand}`}
         >
-          {brand}
+          <span>{brand}</span>
         </Link>
       ))}
     </PageLayout.Content>

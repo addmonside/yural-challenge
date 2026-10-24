@@ -68,9 +68,22 @@ describe('PartList', () => {
       },
     })
 
-    expect(markup).toContain('OSSCA Колодка тормозная')
-    expect(markup).toContain('AP Колодка тормозная')
+    expect(markup).toContain('OSSCA')
+    expect(markup).toContain('AP')
+    expect(markup.match(/Колодка тормозная/g)).toHaveLength(2)
     expect(markup).toContain(`1${NBSP}200${NBSP}₽`)
     expect(markup).toContain(`2${NBSP}400,5${NBSP}₽`)
+  })
+
+  it('renders column headers above the parts list', () => {
+    const markup = render({
+      state: {
+        ...emptyState,
+        list: [{ brand: 'OSSCA', name: 'Колодка тормозная', count: 12, price: 1200 }],
+      },
+    })
+
+    expect(markup).toContain('Производитель / Наименование')
+    expect(markup.indexOf('Производитель / Наименование')).toBeLessThan(markup.indexOf('<ol'))
   })
 })

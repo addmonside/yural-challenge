@@ -25,10 +25,26 @@ ul {
   padding: 0;
 }
 
+.fs-xs {
+  font-size: 0.75rem;
+}
+
+.fs-xxs {
+  font-size: 0.625rem;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
 
 .list-group-item {
   min-height: 3rem;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }

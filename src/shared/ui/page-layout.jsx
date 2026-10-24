@@ -7,7 +7,7 @@ import { Empty } from './empty'
 function PageLayoutRoot({ children, className }) {
   return (
     <section
-      className={clsx('d-flex w-100 flex-grow-1 flex-column px-3 pb-5 px-sm-5', className)}
+      className={clsx('d-flex w-100 flex-grow-1 flex-column px-3 pb-5 pt-5 px-sm-5', className)}
       data-slot="page-layout"
     >
       {children}
@@ -34,7 +34,7 @@ function PageLayoutHeader({ as, className, ...props }) {
     <Comp
       data-slot="page-layout-header"
       className={clsx(
-        'bg-body d-flex flex-row gap-2 rounded-bottom-4 pt-5 pb-4 align-items-center',
+        'bg-body d-flex flex-row gap-2 rounded-bottom-4 pb-2 align-items-center',
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ function PageLayoutToolbar({ as, className, ...props }) {
     <Comp
       data-slot="page-layout-toolbar"
       className={clsx(
-        'bg-body-secondary sticky-top d-flex w-100 flex-row align-items-center justify-content-between gap-4 gap-xl-3 rounded-4 p-3',
+        'bg-body-secondary sticky-top d-flex w-100 flex-row align-items-center justify-content-between gap-4 gap-xl-3 rounded-3 p-3 mt-2 mb-2',
         className,
       )}
       {...props}
@@ -58,9 +58,9 @@ function PageLayoutToolbar({ as, className, ...props }) {
 }
 
 const contentVariants = {
-  default: 'pb-4 pt-4',
-  flex: 'pb-4 pt-4 d-flex flex-column gap-2',
-  centered: 'pb-4 pt-4 d-flex flex-column flex-grow-1 align-items-center justify-content-center',
+  default: 'pb-4 pt-2',
+  flex: 'pb-4 pt-2 d-flex flex-column gap-2',
+  centered: 'pb-4 pt-2 d-flex flex-column flex-grow-1 align-items-center justify-content-center',
 }
 
 function PageLayoutContent({ as, variant = 'default', className, ...props }) {
@@ -82,7 +82,7 @@ function PageLayoutError({ title, error }) {
       <Alert variant="destructive">
         <InfoIcon />
         <Alert.Title>{title}</Alert.Title>
-        <Alert.Description>{error.message}</Alert.Description>
+        <Alert.Description>{error.message ?? error}</Alert.Description>
       </Alert>
     </PageLayoutContent>
   )

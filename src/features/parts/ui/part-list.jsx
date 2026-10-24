@@ -1,6 +1,7 @@
 import { PageLayout } from '@/shared/ui/page-layout'
 import { useParts } from '../model/use-parts'
-import { PartBrandListSkeleton } from './part-brand-list-skeleton'
+import { PartListSkeleton } from './part-list-skeleton'
+import { PartListHeader } from './part-list-header'
 import { PartListItem } from './part-list-item'
 import BarcodeIcon from '@/shared/assets/barcode.svg'
 
@@ -13,7 +14,7 @@ export function PartList({ article, brand }) {
       variant="flex"
     >
       {isPending ? (
-        <PartBrandListSkeleton />
+        <PartListSkeleton />
       ) : error ? (
         <PageLayout.Error
           title="Не удалось загрузить производителей"
@@ -26,17 +27,20 @@ export function PartList({ article, brand }) {
           description={`Для Артикула ${article}  и бренда ${brand} нет подзодящих запчастей`}
         />
       ) : (
-        <ol className="list-group">
-          {list.map((part) => (
-            <PartListItem
-              key={part.brand}
-              brand={part.brand}
-              name={part.name}
-              count={part.count}
-              price={part.price}
-            />
-          ))}
-        </ol>
+        <>
+          <PartListHeader />
+          <ol className="list-group">
+            {list.map((part) => (
+              <PartListItem
+                key={part.brand}
+                brand={part.brand}
+                name={part.name}
+                count={part.count}
+                price={part.price}
+              />
+            ))}
+          </ol>
+        </>
       )}
     </PageLayout.Content>
   )

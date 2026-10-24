@@ -22,14 +22,26 @@ describe('PartListItem', () => {
     const markup = render()
 
     expect(markup).toContain('<li')
-    expect(markup).toContain('OSSCA Колодка тормозная')
+    expect(markup).toContain('Колодка тормозная')
+    expect(markup).toContain('OSSCA')
   })
 
-  it('renders the available count', () => {
-    expect(render()).toContain('<p class="text-center col-1">12</p>')
+  it('renders the available count at the start on mobile and centered on desktop', () => {
+    expect(render()).toContain(
+      '<p class="col-6 col-md-1 mb-0 text-start text-md-center"><span>12</span></p>',
+    )
   })
 
   it('renders the formatted price', () => {
     expect(render()).toContain(`1${NBSP}200${NBSP}₽`)
+  })
+
+  it('uses a responsive grid with the name on the first row on mobile', () => {
+    const markup = render()
+
+    expect(markup).toContain('row g-2 align-items-center')
+    expect(markup).toContain('col-12 col-md-8')
+    expect(markup).toContain('col-6 col-md-3')
+    expect(markup).not.toContain('style=')
   })
 })

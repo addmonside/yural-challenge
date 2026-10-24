@@ -33,7 +33,8 @@ export const Default = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    await expect(canvas.getByText('OSSCA Колодка тормозная')).toBeVisible()
+    await expect(canvas.getByText('Колодка тормозная')).toBeVisible()
+    await expect(canvas.getByText('OSSCA')).toBeVisible()
     await expect(canvas.getByText('12')).toBeVisible()
     await expect(canvasElement.textContent).toContain(`1${NBSP}200${NBSP}₽`)
   },

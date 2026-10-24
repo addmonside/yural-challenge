@@ -1,6 +1,6 @@
 const variants = {
   default: 'text-body',
-  muted: 'text-body-secondary', // в Bootstrap < 5.3 используйте 'text-muted'
+  muted: 'text-body-secondary',
   primary: 'text-primary',
   success: 'text-success',
   danger: 'text-danger',
@@ -8,6 +8,8 @@ const variants = {
 }
 
 const sizes = {
+  xxs: 'fs-xxs',
+  xs: 'fs-xs',
   sm: 'small',
   md: 'fs-6',
   lg: 'fs-5',

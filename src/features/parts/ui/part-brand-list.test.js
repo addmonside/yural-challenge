@@ -55,7 +55,7 @@ describe('PartBrandList', () => {
     const markup = render({ state: { ...emptyState, isPending: true } })
 
     expect(markup).toContain('aria-busy="true"')
-    expect(markup.match(/data-slot="skeleton"/g)).toHaveLength(30)
+    expect(markup.match(/data-slot="skeleton"/g)).toHaveLength(10)
   })
 
   it('renders an API error', () => {
