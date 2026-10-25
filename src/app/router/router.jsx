@@ -15,7 +15,7 @@ export const makeRouter = (app) =>
           children: [
             {
               path: routes.PART_BRAND_LIST,
-              lazy: async () => import('@/features/parts/part-brand-list-page'),
+              lazy: async () => import('@/features/brands/brand-list-page'),
             },
             {
               path: routes.PART_LIST_BY_BRAND,

@@ -2,11 +2,11 @@ import { useCallback } from 'react'
 import { useDebouncedCallback, useQueryParam } from '@/shared/lib'
 import { InputGroup } from '@/shared/ui/input-group'
 import { isValidArticle } from '../model/article-schema'
-import { usePartBrandSearchField } from '../model/use-part-brand-search-field'
+import { useBrandSearchField } from '../model/use-brand-search-field'
 
-export function PartBrandSearchField() {
+export function BrandSearchField() {
   const [search, setSearch] = useQueryParam('search')
-  const { isPending, handleSubmit, register, errors } = usePartBrandSearchField({
+  const { isPending, handleSubmit, register, errors } = useBrandSearchField({
     article: search,
   })
 

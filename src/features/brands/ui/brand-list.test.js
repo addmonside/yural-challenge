@@ -2,10 +2,10 @@ import { createElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
-import { useParts } from '../model/use-parts'
-import { PartBrandList } from './part-brand-list'
+import { useParts } from '@/services/parts/model/use-parts'
+import { BrandList } from './brand-list'
 
-vi.mock('../model/use-parts', () => ({
+vi.mock('@/services/parts/model/use-parts', () => ({
   useParts: vi.fn(),
 }))
 
@@ -24,12 +24,12 @@ function render({ article = '01089', state = emptyState } = {}) {
     createElement(
       StaticRouter,
       { location: article ? `/?search=${article}` : '/' },
-      createElement(PartBrandList),
+      createElement(BrandList),
     ),
   )
 }
 
-describe('PartBrandList', () => {
+describe('BrandList', () => {
   beforeEach(() => {
     useParts.mockReset()
   })

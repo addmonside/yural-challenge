@@ -1,13 +1,13 @@
 import { href, Link } from 'react-router'
+import { useParts } from '@/services/parts'
 import SearchIcon from '@/shared/assets/search.svg'
 import BarcodeIcon from '@/shared/assets/barcode.svg'
 import { useQueryParam } from '@/shared/lib'
 import { routes } from '@/shared/model'
 import { PageLayout } from '@/shared/ui/page-layout'
-import { useParts } from '../model/use-parts'
-import { PartBrandListSkeleton } from './part-brand-list-skeleton'
+import { BrandListSkeleton } from './brand-list-skeleton'
 
-export function PartBrandList() {
+export function BrandList() {
   const [article] = useQueryParam('search')
   const { brandNameList, isPending, error } = useParts(article)
   const hasArticle = Boolean(article?.trim())
@@ -23,7 +23,7 @@ export function PartBrandList() {
   }
 
   if (isPending) {
-    return <PartBrandListSkeleton />
+    return <BrandListSkeleton />
   }
 
   if (error) {

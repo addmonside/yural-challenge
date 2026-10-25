@@ -1,5 +1,5 @@
 import { PageLayout } from '@/shared/ui/page-layout'
-import { useParts } from '../model/use-parts'
+import { useParts } from '@/services/parts'
 import { PartListSkeleton } from './part-list-skeleton'
 import { PartListHeader } from './part-list-header'
 import { PartListItem } from './part-list-item'

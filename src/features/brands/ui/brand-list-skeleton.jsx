@@ -3,7 +3,7 @@ import { Skeleton } from '@/shared/ui/skeleton'
 
 const rows = Array.from({ length: 10 }, (_, index) => `skeleton-${index}`)
 
-export function PartBrandListSkeleton() {
+export function BrandListSkeleton() {
   return (
     <PageLayout.Content
       as="output"

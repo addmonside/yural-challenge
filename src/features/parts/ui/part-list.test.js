@@ -1,10 +1,10 @@
 import { createElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { useParts } from '../model/use-parts'
+import { useParts } from '@/services/parts/model/use-parts'
 import { PartList } from './part-list'
 
-vi.mock('../model/use-parts', () => ({
+vi.mock('@/services/parts/model/use-parts', () => ({
   useParts: vi.fn(),
 }))
 

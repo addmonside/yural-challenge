@@ -8,7 +8,7 @@ export function PartListHeader() {
     >
       <Text
         as="span"
-        size="xs"
+        size="xxs"
         variant="muted"
         className="col-md-8"
       >
@@ -16,15 +16,15 @@ export function PartListHeader() {
       </Text>
       <Text
         as="span"
-        size="xs"
+        size="xxs"
         variant="muted"
-        className="col-md-1 text-center"
+        className="col-md-1 text-center text-nowrap"
       >
         В наличии
       </Text>
       <Text
         as="span"
-        size="xs"
+        size="xxs"
         variant="muted"
         className="col-md-3 text-end"
       >

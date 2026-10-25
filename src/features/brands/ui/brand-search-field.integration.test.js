@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, useLocation } from 'react-router'
 import { describe, expect, it, vi } from 'vite-plus/test'
-import { PartBrandSearchField } from './part-brand-search-field'
+import { BrandSearchField } from './brand-search-field'
 
 vi.mock('@/shared/lib', async (importOriginal) => {
   const actual = await importOriginal()
@@ -26,7 +26,7 @@ function renderField(initialEntries = ['/']) {
       MemoryRouter,
       { initialEntries },
       createElement(LocationDisplay),
-      createElement(PartBrandSearchField),
+      createElement(BrandSearchField),
     ),
   )
 }
@@ -35,7 +35,7 @@ function getLocation() {
   return screen.getByTestId('location').textContent
 }
 
-describe('PartBrandSearchField', () => {
+describe('BrandSearchField', () => {
   it('renders the article input and the submit button', () => {
     renderField()
 

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { partsReducer } from '@/features/parts'
+import { partsReducer } from '@/services/parts'
 import { Provider } from 'react-redux'
 
 const store = configureStore({

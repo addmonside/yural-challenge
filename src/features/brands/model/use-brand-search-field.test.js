@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { articleFormSchema } from './article-schema'
-import { usePartBrandSearchField } from './use-part-brand-search-field'
+import { useBrandSearchField } from './use-brand-search-field'
 
 vi.mock('react-hook-form', () => ({
   useForm: vi.fn(),
@@ -25,14 +25,14 @@ function mockForm({ errors = {}, isSubmitting = false } = {}) {
   })
 }
 
-describe('usePartBrandSearchField', () => {
+describe('useBrandSearchField', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockForm()
   })
 
   it('configures the form with the article schema and default value', () => {
-    usePartBrandSearchField({ article: '7160500039' })
+    useBrandSearchField({ article: '7160500039' })
 
     expect(zodResolver).toHaveBeenCalledWith(articleFormSchema)
     expect(useForm).toHaveBeenCalledWith({
@@ -43,7 +43,7 @@ describe('usePartBrandSearchField', () => {
   })
 
   it('exposes the form API returned by useForm', () => {
-    const result = usePartBrandSearchField({ article: '7160500039' })
+    const result = useBrandSearchField({ article: '7160500039' })
 
     expect(result.register).toBe(register)
     expect(result.handleSubmit).toBe(handleSubmit)
@@ -55,16 +55,16 @@ describe('usePartBrandSearchField', () => {
     const errors = { article: { message: 'Только буквы, цифры и допустимые символы' } }
     mockForm({ errors })
 
-    const result = usePartBrandSearchField({ article: 'abc' })
+    const result = useBrandSearchField({ article: 'abc' })
 
     expect(result.errors).toEqual(errors)
   })
 
   it('maps isSubmitting to isPending', () => {
-    expect(usePartBrandSearchField({ article: '12' }).isPending).toBe(false)
+    expect(useBrandSearchField({ article: '12' }).isPending).toBe(false)
 
     mockForm({ isSubmitting: true })
 
-    expect(usePartBrandSearchField({ article: '12' }).isPending).toBe(true)
+    expect(useBrandSearchField({ article: '12' }).isPending).toBe(true)
   })
 })

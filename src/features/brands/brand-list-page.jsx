@@ -1,6 +1,6 @@
 import { PageLayout } from '@/shared/ui/page-layout'
-import { PartBrandSearchField } from './ui/part-brand-search-field'
-import { PartBrandList } from './ui/part-brand-list'
+import { BrandSearchField } from './ui/brand-search-field'
+import { BrandList } from './ui/brand-list'
 
 function PartBrandListPage() {
   return (
@@ -9,9 +9,9 @@ function PartBrandListPage() {
         <PageLayout.Title>Поиск автозапчастей</PageLayout.Title>
       </PageLayout.Header>
       <PageLayout.Toolbar>
-        <PartBrandSearchField />
+        <BrandSearchField />
       </PageLayout.Toolbar>
-      <PartBrandList />
+      <BrandList />
     </PageLayout>
   )
 }

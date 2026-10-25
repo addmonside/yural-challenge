@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { articleFormSchema } from './article-schema'
 
-export function usePartBrandSearchField({ article }) {
+export function useBrandSearchField({ article }) {
   const {
     register,
     handleSubmit,
