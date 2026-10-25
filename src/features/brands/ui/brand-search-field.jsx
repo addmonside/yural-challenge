@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useDebouncedCallback, useQueryParam } from '@/shared/lib'
 import { InputGroup } from '@/shared/ui/input-group'
+import { Text } from '@/shared/ui/text'
 import { isValidArticle } from '../model/article-schema'
 import { useBrandSearchField } from '../model/use-brand-search-field'
 
@@ -56,16 +57,18 @@ export function BrandSearchField() {
         >
           Найти
         </InputGroup.Button>
-
-        {errors.article && (
-          <p
-            role="alert"
-            style={{ color: 'red' }}
-          >
-            {errors.article.message}
-          </p>
-        )}
       </InputGroup>
+      {errors.article && (
+        <Text
+          as="output"
+          role="alert"
+          size="xxs"
+          variant="danger"
+          className="position-absolute"
+        >
+          {errors.article.message}
+        </Text>
+      )}
     </form>
   )
 }
